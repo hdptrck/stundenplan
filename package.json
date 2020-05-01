@@ -4,9 +4,8 @@
   "description": "",
   "main": "js/main.js",
   "scripts": {
-    "gulp": "gulp sass & gulp uglify",
-    "gulp-sass": "gulp sass",
-    "gulp-uglify": "gulp uglify"
+    "minify-all": "gulp minifyAll",
+    "sass": "gulp sass"
   },
   "repository": {
     "type": "git",
@@ -15,9 +14,15 @@
   "author": "hdptrck",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "babel-preset-env": "^1.7.0",
     "gulp": "^4.0.2",
+    "gulp-babel": "^7.0.1",
+    "gulp-babel-minify": "^0.5.1",
     "gulp-concat": "^2.6.1",
-    "gulp-sass": "^4.1.0",
-    "gulp-uglify": "^3.0.2"
+    "gulp-cssmin": "^0.2.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-sass": "^4.1.0"
   }
 }

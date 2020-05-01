@@ -1,0 +1,14 @@
+.clear-both {
+  clear: both; }
+
+.appointment-prop {
+  width: calc(100% - 0.5rem); }
+
+.event {
+  padding: 3px 5px;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  user-select: none; }
+
+#weekNumber {
+  cursor: default; }

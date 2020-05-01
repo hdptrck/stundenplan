@@ -1,12 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="utf-8">
+	<meta name="description" content="Content">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=no">
+	<title>Stundenplan</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link href="./css/style.css" type="text/css" rel="stylesheet" />
+	<link rel="shortcut icon" href="" />
 </head>
+
 <body>
-    
-    <script src="js/main.js"></script>
+	<div class="container-fluid vh-100 d-flex flex-column">
+		<header>
+			<h1 class="my-3">Stundenplan GIBM</h1>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="select-beruf">
+						<h3>Beruf</h3>
+					</label>
+					<select class="form-control" id="select-beruf"></select>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="select-klasse">
+						<h3>Klasse</h3>
+					</label>
+					<select class="form-control" id="select-klasse"></select>
+				</div>
+			</div>
+			<div>
+				<div class="btn-group float-left" role="group" aria-label="First group">
+					<button type="button" class="btn btn-secondary" id="weekBefore">Vorherige Woche</button>
+					<div class="btn" id="weekNumber"></div>
+					<button type="button" class="btn btn-secondary" id="weekAfter">Nächste Woche</button>
+				</div>
+			</div>
+		</header>
+
+		<div class="row clear-both mt-2">
+			<h5 class="col-sm p-1 text-center">Montag</h5>
+			<h5 class="col-sm p-1 text-center">Dienstag</h5>
+			<h5 class="col-sm p-1 text-center">Mittwoch</h5>
+			<h5 class="col-sm p-1 text-center">Donnerstag</h5>
+			<h5 class="col-sm p-1 text-center">Freitag</h5>
+			<h5 class="col-sm p-1 text-center">Samstag</h5>
+			<h5 class="col-sm p-1 text-center">Sonntag</h5>
+		</div>
+		<div class="row flex-grow-1 bg-second">
+			<div class="col-sm p-1 weekday" id="weekday-1"></div>
+			<div class="col-sm p-1 weekday" id="weekday-2"></div>
+			<div class="col-sm p-1 weekday" id="weekday-3"></div>
+			<div class="col-sm p-1 weekday" id="weekday-4"></div>
+			<div class="col-sm p-1 weekday" id="weekday-5"></div>
+			<div class="col-sm p-1 weekday" id="weekday-6"></div>
+			<div class="col-sm p-1 weekday" id="weekday-0"></div>
+		</div>
+
+
+	</div>
+	<script src="./js/main.js"></script>
 </body>
+
 </html>
