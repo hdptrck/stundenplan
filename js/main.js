@@ -15,6 +15,23 @@ const getWeekNumber = (d) => {
   return [d.getUTCFullYear(), weekNo];
 }
 
+const getDatesOfWeek = (week, year) => {
+  var simple = new Date(year, 0, 1 + (week - 1) * 7);
+  console.log('simple', simple);
+  var dow = simple.getDay();
+  console.log('dow', dow);
+  var ISOweekStart = simple;
+  if (dow <= 4) {
+    ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
+  } else {
+    ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
+  }
+  console.log('ISOWeekStart', ISOweekStart);
+  return ISOweekStart;
+}
+
+console.log(getDatesOfWeek(20, 2020));
+
 const selectBeruf = document.getElementById('select-beruf');
 selectBeruf.appendChild(createOption('0', 'Beruf wählen'));
 
@@ -82,6 +99,9 @@ const updateKlasse = () => {
 function updateCalendar() {
   if (selectBeruf.options[selectBeruf.selectedIndex].value != 0 && selectKlasse.options[selectKlasse.selectedIndex].value != 0) {
     saveLastSetting();
+    // Childs löschen
+    clearCalendar();
+    console.log(weekDate);
     fetch('http://sandbox.gibm.ch/tafel.php?klasse_id=' + selectKlasse.options[selectKlasse.selectedIndex].value + '&woche=' + selectedYearWeek[1] + '-' + selectedYearWeek[0])
       .then(
         function (response) {
@@ -90,14 +110,9 @@ function updateCalendar() {
             return;
           }
           response.json().then(function (data) {
-            // Childs löschen
-            clearCalendar();
-
             console.log(data);
-            let div;
-
             for (let i = 0; i < data.length; i++) {
-              div = document.createElement('div');
+              let div = document.createElement('div');
               let from = data[i].tafel_von;
               let to = data[i].tafel_bis;
               div.innerHTML = from.slice(0, -3) + '-' + to.slice(0, -3) + '<br>' + data[i].tafel_longfach + '<br>' + data[i].tafel_lehrer + '<br>' + data[i].tafel_raum;
