@@ -18,47 +18,72 @@
 		<header>
 			<h1 class="my-3">Stundenplan GIBM</h1>
 			<div class="row">
-				<div class="form-group col-md-6">
+				<div class="form-group col-md col-sm-12-6">
 					<label for="select-beruf">
-						<h3>Beruf</h3>
+						<h2>Beruf</h2>
 					</label>
 					<select class="form-control" id="select-beruf"></select>
 				</div>
-				<div class="form-group col-md-6">
+				<div class="form-group col-md col-sm-12-6">
 					<label for="select-klasse">
-						<h3>Klasse</h3>
+						<h2>Klasse</h2>
 					</label>
 					<select class="form-control" id="select-klasse"></select>
 				</div>
 			</div>
 			<div>
 				<div class="btn-group float-left" role="group" aria-label="First group">
-					<button type="button" class="btn btn-secondary" id="weekBefore">Vorherige Woche</button>
+					<button type="button" class="btn btn-primary" id="weekBefore">Vorherige Woche</button>
 					<div class="btn" id="weekNumber"></div>
-					<button type="button" class="btn btn-secondary" id="weekAfter">Nächste Woche</button>
+					<button type="button" class="btn btn-primary" id="weekAfter">Nächste Woche</button>
 				</div>
 			</div>
 		</header>
-
-		<div class="row clear-both mt-2">
-			<h5 class="col-sm p-1 text-center">Montag</h5>
-			<h5 class="col-sm p-1 text-center">Dienstag</h5>
-			<h5 class="col-sm p-1 text-center">Mittwoch</h5>
-			<h5 class="col-sm p-1 text-center">Donnerstag</h5>
-			<h5 class="col-sm p-1 text-center">Freitag</h5>
-			<h5 class="col-sm p-1 text-center">Samstag</h5>
-			<h5 class="col-sm p-1 text-center">Sonntag</h5>
+<!---->
+		<div id="calendar-table" class="row clear-both mt-3 flex-grow-1 bg-second">
+			<div class="col-md col-sm-12">
+				<h3 class="p-1 text-center" id="weekday-title-0"></h3>
+				<div class="row flex-grow-1 bg-second">
+					<div class="col p-1 weekday" id="weekday-0"></div>
+				</div>
+			</div>
+			<div class="col-md col-sm-12">
+				<h3 class="p-1 text-center" id="weekday-title-1"></h3>
+				<div class="row flex-grow-1 bg-second">
+					<div class="col p-1 weekday" id="weekday-1"></div>
+				</div>
+			</div>
+			<div class="col-md col-sm-12">
+				<h3 class="p-1 text-center" id="weekday-title-2"></h3>
+				<div class="row flex-grow-1 bg-second">
+					<div class="col p-1 weekday" id="weekday-2"></div>
+				</div>
+			</div>
+			<div class="col-md col-sm-12">
+				<h3 class="p-1 text-center" id="weekday-title-3"></h3>
+				<div class="row flex-grow-1 bg-second">
+					<div class="col p-1 weekday" id="weekday-3"></div>
+				</div>
+			</div>
+			<div class="col-md col-sm-12">
+				<h3 class="p-1 text-center" id="weekday-title-4"></h3>
+				<div class="row flex-grow-1 bg-second">
+					<div class="col p-1 weekday" id="weekday-4"></div>
+				</div>
+			</div>
+			<div class="col-md col-sm-12">
+				<h3 class="p-1 text-center" id="weekday-title-5"></h3>
+				<div class="row flex-grow-1 bg-second">
+					<div class="col p-1 weekday" id="weekday-5"></div>
+				</div>
+			</div>
+			<div class="col-md col-sm-12">
+				<h3 class="p-1 text-center" id="weekday-title-6"></h3>
+				<div class="row flex-grow-1 bg-second">
+					<div class="col p-1 weekday" id="weekday-6"></div>
+				</div>
+			</div>
 		</div>
-		<div class="row flex-grow-1 bg-second">
-			<div class="col-sm p-1 weekday" id="weekday-1"></div>
-			<div class="col-sm p-1 weekday" id="weekday-2"></div>
-			<div class="col-sm p-1 weekday" id="weekday-3"></div>
-			<div class="col-sm p-1 weekday" id="weekday-4"></div>
-			<div class="col-sm p-1 weekday" id="weekday-5"></div>
-			<div class="col-sm p-1 weekday" id="weekday-6"></div>
-			<div class="col-sm p-1 weekday" id="weekday-0"></div>
-		</div>
-
 
 	</div>
 	<script src="./js/main.js"></script>

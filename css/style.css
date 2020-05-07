@@ -12,3 +12,19 @@
 
 #weekNumber {
   cursor: default; }
+
+#calendar-table > div > div:first-of-type {
+  display: inline;
+  margin: 0; }
+
+#calendar-table > div > h3 {
+  border-right: 1px solid #ced4da; }
+
+#calendar-table :last-child h3 {
+  border-right: none; }
+
+#calendar-table > div {
+  padding: 0; }
+
+h3 {
+  font-size: 1rem; }

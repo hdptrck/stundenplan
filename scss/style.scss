@@ -16,3 +16,26 @@
 #weekNumber {
     cursor: default;
 }
+
+#calendar-table {
+    > div > div:first-of-type {
+        display: inline;
+        margin: 0;
+    }
+
+    > div > h3 {
+        border-right: 1px solid #ced4da;
+    }
+
+    :last-child h3 {
+        border-right: none;
+    }
+
+    > div {
+        padding: 0;
+    }
+}
+
+h3 {
+    font-size: 1rem;
+}
