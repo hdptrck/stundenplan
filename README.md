@@ -7,7 +7,7 @@ English: timetable
 A project in the module 133 at GIBMIT.
 
 ## Authors
-* **Patrick Heid** - *hdptrck* - *design work* - [hdptrck](https://github.com/hdptrck)
+* **Patrick Heid** - [hdptrck](https://github.com/hdptrck)
 
 ## Installation
 You'll need [Node.js](https://nodejs.org/en/) for [NPM](https://www.npmjs.com/).
