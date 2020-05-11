@@ -109,6 +109,7 @@ const updateBeruf = () => {
  * Fetching the data for Klasse (class) and fill in the select element
  */
 const updateKlasse = () => {
+  selectKlasse.selectedIndex = 0;
   disableSelectKlasse();
   // Get selected value from jobs select
   let val = parseInt(selectBeruf.options[selectBeruf.selectedIndex].value);
@@ -306,22 +307,16 @@ function setSelectedKlasse() {
 }
 
 /**
- * Sets option as selected depending on the vale
- * @param  {Object} s Select element
- * @param  {String} valsearch Value of the option
+ * Sets option as selected depending on the value
+ * @param  {Object} object Select element
+ * @param  {String} valSearch Value of the option
  */
-function setSelectedIndex(s, valsearch) {
-  // Loop through all the items in the select element
-  for (i = 0; i < s.options.length; i++) {
-    if (s.options[i].value == valsearch) {
-      // Item is found, set as selected and exit
-      s.options[i].selected = true;
-      break;
-    }
-  }
-  return;
+function setSelectedIndex(object, valSearch) {
+  // Get htmlCollection of Options and convert to array
+  const opt = [].slice.call(object.options)
+  // Find option with matching value and set to selected
+  opt.find(element => element.value == valSearch).selected = true;
 }
-
 
 // Start
 updateWeekNumber(btnSelectedWeek, selectedYearWeek);
