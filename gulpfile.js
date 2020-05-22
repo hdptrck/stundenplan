@@ -15,7 +15,6 @@ gulp.task('minHtml', () => {
 gulp.task('minCss', () => {
     return gulp.src('./css/*.css')
         .pipe(cssmin())
-        .pipe(gulp.dest('./css/'))
         .pipe(gulp.dest('./dist/css/'));
 })
 
