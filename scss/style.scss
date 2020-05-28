@@ -8,9 +8,16 @@
 
 .event {
     padding: 3px 5px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     border-radius: 5px;
     user-select: none;
+    opacity: 1;
+    transition: .5s opacity;
+    -webkit-animation: fadein .5s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein .5s; /* Firefox < 16 */
+    -ms-animation: fadein .5s; /* Internet Explorer */
+    -o-animation: fadein .5s; /* Opera < 12.1 */
+    animation: fadein .5s;
 }
 
 #weekNumber {
@@ -38,4 +45,43 @@
 
 h3 {
     font-size: 1rem;
+}
+
+.btn {
+    transition: .25s all;    
+}
+
+.py-btn {
+    padding-top: .375rem;
+    padding-bottom: .375rem;
+}
+
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
