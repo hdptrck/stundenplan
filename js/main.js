@@ -54,6 +54,9 @@ const getWeekNumber = (d) => {
   return [d.getUTCFullYear(), weekNo, getDatesOfWeek(weekNo, d.getUTCFullYear())];
 }
 
+// Only true if page new loaded
+let firstLoad = true;
+
 // Select elements and set the default option
 const selectBeruf = document.getElementById('select-beruf');
 selectBeruf.appendChild(createOption('0', 'Beruf wählen'));
@@ -83,6 +86,9 @@ const btnSelectedWeek = document.getElementById('weekNumber');
 const btnWeekBefore = document.getElementById('weekBefore');
 const btnWeekAfter = document.getElementById('weekAfter');
 
+// Info
+const calendarInfo = document.getElementById('calendar-info');
+
 /**
  * Fetching the data for Beruf (jobs) and fill in the select element
  */
@@ -91,9 +97,9 @@ const updateBeruf = () => {
     .then((response) => {
       return response.json();
     })
-    .then((myJson) => {
+    .then((data) => {
       // Add options
-      myJson.forEach(beruf => {
+      data.forEach(beruf => {
         selectBeruf.appendChild(createOption(beruf.beruf_id, beruf.beruf_name));
       });
     })
@@ -101,6 +107,7 @@ const updateBeruf = () => {
       setSelectedBeruf();
     })
     .catch(function (error) {
+      alert('API reagiert nicht, versuchen Sie es bitte erneut.')
       console.error('Fetch error (Beruf): ' + error);
     });
 }
@@ -111,6 +118,7 @@ const updateBeruf = () => {
 const updateKlasse = () => {
   selectKlasse.selectedIndex = 0;
   disableSelectKlasse();
+  clearCalendar();
   // Get selected value from jobs select
   let val = parseInt(selectBeruf.options[selectBeruf.selectedIndex].value);
   if (val) {
@@ -118,20 +126,19 @@ const updateKlasse = () => {
       .then((response) => {
         return response.json();
       })
-      .then((myJson) => {
+      .then((data) => {
         removeOptions(selectKlasse);
-        clearCalendar();
         // Add Options
-        myJson.forEach(klasse => {
+        data.forEach(klasse => {
           selectKlasse.appendChild(createOption(klasse.klasse_id, klasse.klasse_name));
         });
-        // TODO: disableSelect
       })
       .then(() => {
         setSelectedKlasse();
         disableSelectKlasse();
       })
       .catch((error) => {
+        alert('API reagiert nicht, versuchen Sie es bitte erneut.')
         console.error('Fetch error (Klasse): ' + error);
       });
   }
@@ -145,40 +152,40 @@ function updateCalendar() {
     saveLastSetting();
     // Childs löschen
     clearCalendar();
-    console.log(weekDate);
     fetch('http://sandbox.gibm.ch/tafel.php?klasse_id=' + selectKlasse.options[selectKlasse.selectedIndex].value + '&woche=' + selectedYearWeek[1] + '-' + selectedYearWeek[0])
-      .then(
-        function (response) {
-          if (response.status !== 200) {
-            console.warn('Problem: Status Code: ' + response.status);
-            return;
-          }
-          response.json().then((data) => {
-            for (let i = 0; i < data.length; i++) {
-              let div = document.createElement('div');
-              let from = data[i].tafel_von;
-              let to = data[i].tafel_bis;
-              div.innerHTML = from.slice(0, -3) + '-' + to.slice(0, -3) + '<br>' + data[i].tafel_longfach + '<br>' + data[i].tafel_lehrer + '<br>' + data[i].tafel_raum;
-
-              div.classList.add('bg-primary', 'appointment-prop', 'event', 'text-white');
-
-              // If screen < 768px remove margin on top of appointment 
-              if (window.innerWidth >= 768) {
-                div.classList.add('position-absolute');
-                let fromMin = toMinutes(from);
-                let toMin = toMinutes(to);
-                div.style.top = (fromMin - calendarStart) / 5 * intervalHeight + 'px';
-                div.style.height = (toMin - fromMin) / 5 * intervalHeight + 'px';
-              } else {
-                // Add margin on bottom of appointment
-                div.classList.add('mb-1');
-              }
-              document.getElementById('weekday-' + (data[i].tafel_wochentag - (data[i].tafel_wochentag == 0 ? (-6) : 1))).appendChild(div);
-            }
-          });
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data == false) {
+          calendarInfo.innerText = 'Keine Daten vorhanden';
+          return;
         }
-      )
+
+        data.forEach((element, index) => {
+          let div = document.createElement('div');
+          let from = element.tafel_von;
+          let to = element.tafel_bis;
+          div.innerHTML = from.slice(0, -3) + '-' + to.slice(0, -3) + '<br>' + element.tafel_longfach + '<br>' + element.tafel_lehrer + '<br>' + element.tafel_raum;
+
+          div.classList.add('bg-primary', 'appointment-prop', 'event', 'text-white');
+
+          // If screen < 768px remove margin on top of appointment 
+          if (window.innerWidth >= 768) {
+            div.classList.add('position-absolute');
+            let fromMin = toMinutes(from);
+            let toMin = toMinutes(to);
+            div.style.top = (fromMin - calendarStart) / 5 * intervalHeight + 'px';
+            div.style.height = (toMin - fromMin) / 5 * intervalHeight + 'px';
+          } else {
+            // Add margin on bottom of appointment
+            div.classList.add('mb-1');
+          }
+          document.getElementById('weekday-' + (element.tafel_wochentag - (element.tafel_wochentag == 0 ? (-6) : 1))).appendChild(div);
+        });
+      })
       .catch(function (error) {
+        alert('API reagiert nicht, versuchen Sie es bitte erneut.')
         console.error('Fetch error (Tafel): ' + error);
       });
   }
@@ -220,7 +227,6 @@ function removeOptions(select) {
     select.remove(i);
   }
 }
-
 
 /**
  * Makes single digit numbers to numbers with two digits
@@ -270,9 +276,21 @@ function toMinutes(t) {
  * Removes all events in the calendar
  */
 function clearCalendar() {
-  document.querySelectorAll('.event').forEach(element => {
-    element.parentElement.removeChild(element);
+  calendarInfo.innerText = '';
+  let arr = document.querySelectorAll('.event');
+  arr.forEach(element => {
+    element.style.opacity = '0';
   });
+  btnWeekAfter.disabled = true;
+  btnWeekBefore.disabled = true;
+  // Timeout for transition
+  window.setTimeout(() => {
+    arr.forEach(element => {
+      element.parentElement.removeChild(element);
+    })
+    btnWeekAfter.disabled = false;
+    btnWeekBefore.disabled = false;
+  }, 500);
 }
 
 /**
@@ -288,7 +306,7 @@ function saveLastSetting() {
  * Sets (if saved) the last selected Beruf (job)
  */
 function setSelectedBeruf() {
-  if (localStorage.getItem('beruf_id')) {
+  if (localStorage.getItem('beruf_id') && firstLoad) {
     setSelectedIndex(selectBeruf, localStorage.getItem('beruf_id'));
     updateKlasse();
   } else {
@@ -300,9 +318,10 @@ function setSelectedBeruf() {
  * Sets (if saved) the last selected Klasse (class)
  */
 function setSelectedKlasse() {
-  if (localStorage.getItem('klasse_id')) {
+  if (localStorage.getItem('klasse_id') && firstLoad) {
     setSelectedIndex(selectKlasse, localStorage.getItem('klasse_id'));
     updateCalendar();
+    firstLoad = false;
   }
 }
 
